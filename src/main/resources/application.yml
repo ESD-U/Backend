@@ -1,0 +1,6 @@
+envrionment:
+  test:
+    message: ${TEST:wow}
+auth:
+  jwt:
+    secret: ${JWT_SECRET:}
