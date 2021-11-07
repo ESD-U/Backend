@@ -9,3 +9,4 @@ spring:
   jpa:
     generate-ddl: false
     show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
