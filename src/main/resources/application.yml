@@ -1,3 +1,6 @@
+auth:
+  jwt:
+    secret: ${SECRET_KEY:}
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
