@@ -3,6 +3,7 @@ package dsmesd.esdu.global.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,7 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .formLogin().disable()
                 .authorizeRequests()
 
-
+                // auth
+                .antMatchers(HttpMethod.POST, "login", "token-refresh").hasAuthority("USER")
 
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
