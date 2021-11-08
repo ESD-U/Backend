@@ -1,6 +1,8 @@
 auth:
   jwt:
-    secret: ${SECRET_KEY:}
+    secret: ${JWT_SECRET_KEY:}
+  request:
+    secret: ${REQUEST_SECRET_KEY:}
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
