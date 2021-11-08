@@ -35,11 +35,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .antMatchers(HttpMethod.GET, "/value").permitAll()
                 .antMatchers(HttpMethod.POST, "/value").permitAll()
 
+                // light
+                .antMatchers(HttpMethod.GET, "/light").permitAll()
+                .antMatchers(HttpMethod.POST, "/light/*").hasAuthority("USER")
+
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 .and().apply(new FilterConfigure(jwtTokenProvider));
-
     }
 
     @Bean
