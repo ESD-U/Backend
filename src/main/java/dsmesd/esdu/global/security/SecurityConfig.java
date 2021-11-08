@@ -31,6 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 // auth
                 .antMatchers(HttpMethod.POST, "/login", "/token-refresh").permitAll()
 
+                // sensor
+                .antMatchers(HttpMethod.GET, "/value").permitAll()
+                .antMatchers(HttpMethod.POST, "/value").permitAll()
+
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
