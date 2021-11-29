@@ -9,10 +9,10 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class LoginRequest {
 
-    @NotBlank
+    @NotBlank(message = "id is missing")
     private String id;
 
-    @NotBlank
+    @NotBlank(message = "password is missing")
     private String password;
 
 }

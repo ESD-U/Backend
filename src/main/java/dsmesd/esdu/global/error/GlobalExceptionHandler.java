@@ -11,9 +11,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
-        final ErrorResponse response = new ErrorResponse(ErrorCode.INVALID_INPUT_VALUE);
+        String firstError = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        final ErrorResponse response = new ErrorResponse(ErrorCode.INVALID_INPUT_VALUE, firstError);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    protected ResponseEntity<ErrorResponse> handleHttpMessageNotReadableExceptionException(final HttpMessageNotReadableException e) {
+        final ErrorResponse response = new ErrorResponse(ErrorCode.INVALID_INPUT_VALUE, "Request Message Can't Read");
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
     }
 
