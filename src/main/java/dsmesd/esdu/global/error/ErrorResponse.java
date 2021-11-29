@@ -9,8 +9,13 @@ public class ErrorResponse {
     private final int status;
 
     public ErrorResponse(ErrorCode errorCode) {
-        this.message = errorCode.getMessage();
         this.status = errorCode.getStatus();
+        this.message = errorCode.getMessage();
+    }
+
+    public ErrorResponse(ErrorCode errorCode, String message) {
+        this.status = errorCode.getStatus();
+        this.message = message;
     }
 
 }

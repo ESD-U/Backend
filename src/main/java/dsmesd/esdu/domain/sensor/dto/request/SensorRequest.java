@@ -9,17 +9,17 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 public class SensorRequest {
 
-    @NotBlank
+    @NotBlank(message = "secret_key is missing")
     private String secretKey;
 
-    @NotNull
-    @Min(value = -10)
-    @Max(value = 100)
+    @NotNull(message = "temperature is missing")
+    @Min(value = -10, message = "temperature cannot be lower than -10")
+    @Max(value = 100, message = "temperature cannot be higher than 100")
     private Double temperature;
 
-    @NotNull
-    @PositiveOrZero
-    @Max(value = 100)
+    @NotNull(message = "humidity is missing")
+    @PositiveOrZero(message = "humidity cannot be lower than 0")
+    @Max(value = 100, message = "humidity cannot be higher than 100")
     private Double humidity;
 
 }
