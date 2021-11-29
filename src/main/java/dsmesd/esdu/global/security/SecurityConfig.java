@@ -34,10 +34,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 // sensor
                 .antMatchers(HttpMethod.GET, "/value").permitAll()
                 .antMatchers(HttpMethod.POST, "/value").permitAll()
+                .antMatchers(HttpMethod.GET, "/value/recent").permitAll()
 
                 // light
                 .antMatchers(HttpMethod.GET, "/light").permitAll()
-                .antMatchers(HttpMethod.POST, "/light/*").hasAuthority("USER")
+                .antMatchers(HttpMethod.POST, "/light/on", "/light/off").hasAuthority("USER")
+                .antMatchers(HttpMethod.GET, "/light/recent").permitAll()
 
                 .anyRequest().authenticated()
                 .and().exceptionHandling()

@@ -1,8 +1,10 @@
 package dsmesd.esdu.domain.light.controller;
 
+import dsmesd.esdu.domain.light.dto.LightResponse;
 import dsmesd.esdu.domain.light.service.LightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,11 @@ public class LightController {
     @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter getLightInfo() {
         return lightService.getLightInfo();
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<LightResponse> getRecentLightInfo() {
+        return lightService.getRecentLightInfo();
     }
 
 }
