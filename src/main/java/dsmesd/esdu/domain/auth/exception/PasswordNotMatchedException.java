@@ -5,8 +5,8 @@ import dsmesd.esdu.global.error.exception.GlobalException;
 
 public class PasswordNotMatchedException extends GlobalException {
 
-    public PasswordNotMatchedException() {
-        super(ErrorCode.PASSWORD_NOT_MATCHED);
+    public PasswordNotMatchedException(String password) {
+        super(ErrorCode.PASSWORD_NOT_MATCHED, password + " is not correct password");
     }
 
 }

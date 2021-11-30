@@ -43,7 +43,7 @@ public class JwtTokenProvider {
         try {
             return Jwts.parser().setSigningKey(encodingSecretKey()).parseClaimsJws(token).getBody().getSubject();
         } catch (Exception e) {
-            throw new InvalidTokenException();
+            throw new InvalidTokenException(token);
         }
     }
 
@@ -70,7 +70,7 @@ public class JwtTokenProvider {
             String type = Jwts.parser().setSigningKey(encodingSecretKey()).parseClaimsJws(token).getBody().get("type", String.class);
             return type.equals(typeKind);
         } catch (Exception e) {
-            throw new InvalidTokenException();
+            throw new InvalidTokenException(token);
         }
     }
 

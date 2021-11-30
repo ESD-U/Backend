@@ -5,8 +5,8 @@ import dsmesd.esdu.global.error.exception.GlobalException;
 
 public class UserNotFoundException extends GlobalException {
 
-    public UserNotFoundException() {
-        super(ErrorCode.USER_NOT_FOUND);
+    public UserNotFoundException(String id) {
+        super(ErrorCode.USER_NOT_FOUND, id + " is not correct user id");
     }
 
 }
