@@ -4,8 +4,8 @@ import dsmesd.esdu.global.error.ErrorCode;
 
 public class InvalidSecretKeyException extends GlobalException {
 
-    public InvalidSecretKeyException() {
-        super(ErrorCode.INVALID_SECRET_KEY);
+    public InvalidSecretKeyException(String secretkey) {
+        super(ErrorCode.INVALID_SECRET_KEY, secretkey + " is not correct secret key");
     }
 
 }
