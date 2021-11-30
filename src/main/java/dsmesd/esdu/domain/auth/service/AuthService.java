@@ -22,10 +22,10 @@ public class AuthService {
 
     public LoginResponse login(String id, String password) {
         User user = userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException(id));
 
         if (!passwordEncoder.matches(password,user.getPassword()))
-            throw new PasswordNotMatchedException();
+            throw new PasswordNotMatchedException(password);
 
         String accessToken = jwtTokenProvider.generateAccessToken(user.getId());
         String refreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
@@ -35,7 +35,7 @@ public class AuthService {
 
     public TokenRefreshResponse tokenRefresh(String refreshToken) {
         if (!jwtTokenProvider.validateRefreshToken(refreshToken)) {
-            throw new InvalidTokenException();
+            throw new InvalidTokenException(refreshToken);
         }
         String id = jwtTokenProvider.getId(refreshToken);
         String accessToken = jwtTokenProvider.generateAccessToken(id);
