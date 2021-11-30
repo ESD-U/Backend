@@ -13,8 +13,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
-        String firstError = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        final ErrorResponse response = new ErrorResponse(ErrorCode.INVALID_INPUT_VALUE, firstError);
+        String firstErrorMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        final ErrorResponse response = new ErrorResponse(ErrorCode.INVALID_INPUT_VALUE, firstErrorMessage);
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
     }
 
@@ -27,14 +27,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(GlobalException.class)
     protected ResponseEntity<ErrorResponse> handleGlobalException(final GlobalException e) {
         final ErrorCode errorCode = e.getErrorCode();
-        final ErrorResponse response = new ErrorResponse(errorCode);
+        final ErrorResponse response = new ErrorResponse(errorCode, e.getReason());
         return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
     }
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(final Exception e) {
         e.printStackTrace();
-        final ErrorResponse response = new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR);
+        final ErrorResponse response = new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR, e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
     }
 

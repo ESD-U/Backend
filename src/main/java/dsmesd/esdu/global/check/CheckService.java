@@ -12,7 +12,7 @@ public class CheckService {
 
     public void checkSecretKey(String secretKey) {
         if (!this.secretKey.equals(secretKey)) {
-            throw new InvalidSecretKeyException();
+            throw new InvalidSecretKeyException(secretKey);
         }
     }
 
