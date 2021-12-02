@@ -1,6 +1,5 @@
 package dsmesd.esdu.domain.sensor.controller;
 
-import dsmesd.esdu.domain.light.dto.LightResponse;
 import dsmesd.esdu.domain.sensor.dto.request.SensorRequest;
 import dsmesd.esdu.domain.sensor.dto.response.SensorResponse;
 import dsmesd.esdu.domain.sensor.service.SensorService;
