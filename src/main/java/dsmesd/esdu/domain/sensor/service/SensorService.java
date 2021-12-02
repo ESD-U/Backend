@@ -1,6 +1,5 @@
 package dsmesd.esdu.domain.sensor.service;
 
-import dsmesd.esdu.domain.light.dto.LightResponse;
 import dsmesd.esdu.domain.sensor.dto.response.SensorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
