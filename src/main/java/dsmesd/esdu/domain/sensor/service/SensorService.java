@@ -7,26 +7,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SensorService {
 
-    private final SseEmitter emitter = new SseEmitter(-1L);
+    private final List<SseEmitter> emitter = new ArrayList<>();
     private Double temperature;
     private Double humidity;
 
     public void sendSensorValue(double temperature, double humidity) {
         this.temperature = temperature;
         this.humidity = humidity;
-        try {
-            emitter.send(new SensorResponse(temperature, humidity));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        emitter.forEach( a -> {
+            try {
+                a.send(new SensorResponse(temperature, humidity));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public SseEmitter getSensorValue() {
-        return emitter;
+        SseEmitter newSseEmitter = new SseEmitter(-1L);
+        emitter.add(newSseEmitter);
+        return newSseEmitter;
     }
 
     public ResponseEntity<SensorResponse> getRecentSensorInfo() {

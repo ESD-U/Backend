@@ -7,24 +7,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LightService {
 
-    private final SseEmitter emitter = new SseEmitter(-1L);
+    private final List<SseEmitter> emitter = new ArrayList<>();
     private Boolean light;
 
     public void light(boolean light) {
         this.light = light;
-        try {
-            emitter.send(new LightResponse(light));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        emitter.forEach( a -> {
+            try {
+                a.send(new LightResponse(light));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public SseEmitter getLightInfo() {
-        return emitter;
+        SseEmitter newSseEmitter = new SseEmitter(-1L);
+        emitter.add(newSseEmitter);
+        return newSseEmitter;
     }
 
     public ResponseEntity<LightResponse> getRecentLightInfo() {
