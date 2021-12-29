@@ -13,17 +13,18 @@ import java.util.List;
 @Service
 public class SensorService {
 
-    private final List<SseEmitter> emitter = new ArrayList<>();
+    private final List<SseEmitter> emitters = new ArrayList<>();
     private Double temperature;
     private Double humidity;
 
     public void sendSensorValue(double temperature, double humidity) {
         this.temperature = temperature;
         this.humidity = humidity;
-        emitter.forEach( a -> {
+        emitters.forEach( a -> {
             try {
                 a.send(new SensorResponse(temperature, humidity));
             } catch (IOException e) {
+                emitters.remove(a);
                 e.printStackTrace();
             }
         });
@@ -31,7 +32,7 @@ public class SensorService {
 
     public SseEmitter getSensorValue() {
         SseEmitter newSseEmitter = new SseEmitter(-1L);
-        emitter.add(newSseEmitter);
+        emitters.add(newSseEmitter);
         return newSseEmitter;
     }
 

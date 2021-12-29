@@ -13,15 +13,16 @@ import java.util.List;
 @Service
 public class LightService {
 
-    private final List<SseEmitter> emitter = new ArrayList<>();
+    private final List<SseEmitter> emitters = new ArrayList<>();
     private Boolean light;
 
     public void light(boolean light) {
         this.light = light;
-        emitter.forEach( a -> {
+        emitters.forEach( a -> {
             try {
                 a.send(new LightResponse(light));
             } catch (IOException e) {
+                emitters.remove(a);
                 e.printStackTrace();
             }
         });
@@ -29,7 +30,7 @@ public class LightService {
 
     public SseEmitter getLightInfo() {
         SseEmitter newSseEmitter = new SseEmitter(-1L);
-        emitter.add(newSseEmitter);
+        emitters.add(newSseEmitter);
         return newSseEmitter;
     }
 
